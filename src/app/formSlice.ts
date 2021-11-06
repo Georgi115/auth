@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { searchUser, addUser } from "../helpers/authFunction";
 import { validate } from "../helpers/validate";
 import { IActionChangeInput } from "../interface/formInterface";
 interface IState {
@@ -9,6 +10,7 @@ interface IState {
   emptyFields: boolean;
   choiceAuth: string;
   errorFields: boolean;
+  message: null | string;
 }
 const initialState: IState = {
   email: "",
@@ -17,6 +19,7 @@ const initialState: IState = {
   emptyFields: false,
   errorFields: false,
   choiceAuth: "enter",
+  message: null,
 };
 
 export const formSlice = createSlice({
@@ -35,12 +38,15 @@ export const formSlice = createSlice({
       state.errorFields = false;
       state.email = "";
       state.password = "";
+      state.message = null;
       state.choiceAuth = action.payload;
     },
     changePasswordView(state, action: PayloadAction) {
       state.viewPassword = !state.viewPassword;
     },
-    submitForm(state, action: PayloadAction) {
+    submitForm(state, action: PayloadAction<string>) {
+      state.message = null;
+      const { email, password } = state;
       const data = [state.email, state.password];
       const res = data.every((el) => el.trim() !== "");
       if (!res) {
@@ -51,7 +57,19 @@ export const formSlice = createSlice({
         { value: state.email, required: "email" },
         { value: state.password, required: "password" },
       ];
-      if (!validate(obj)) state.errorFields = true;
+      if (!validate(obj)) {
+        state.errorFields = true;
+        return;
+      }
+      if (action.payload === "enter") {
+        searchUser(state.email, state.password)
+          ? (state.message = "Вы успешно зашли в приложение")
+          : (state.message = "Неправильные логин и пароль");
+      } else if (action.payload === "registration") {
+        addUser({ email, password })
+          ? (state.message = "Такой пользователь существует")
+          : (state.message = "Вы успешно зарегистрированы");
+      }
     },
   },
 });

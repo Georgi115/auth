@@ -1,10 +1,13 @@
 import React, { FC } from "react";
 import { ChoiceAuth, Button, Inputs, Error } from "..";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import style from "./formLogin.module.css";
 
 export const FormLogin: FC = () => {
+  const message = useAppSelector(
+    (state: RootState): string | null => state.formSlice.message
+  );
   const emptyFields = useAppSelector(
     (state: RootState): boolean => state.formSlice.emptyFields
   );
@@ -21,7 +24,10 @@ export const FormLogin: FC = () => {
     >
       <ChoiceAuth />
       <Inputs />
-      <Button />
+      {message === "Вы успешно зашли в приложение" ||
+      message === "Вы успешно зарегистрированы" ? null : (
+        <Button />
+      )}
       {emptyFields ? (
         <Error nameClass="emptyFieldsError" text="Введите все поля" />
       ) : null}

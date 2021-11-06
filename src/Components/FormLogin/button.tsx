@@ -18,7 +18,7 @@ export const Button: FC = () => {
   //handlers
   const clickSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    dispatch(submitForm());
+    dispatch(submitForm(choiceAuth));
   };
   //
   const label = choiceAuth === "enter" ? "Войти" : "Зарегистрироваться";

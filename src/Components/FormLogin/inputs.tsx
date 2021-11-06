@@ -30,7 +30,6 @@ export const Inputs: FC = () => {
   //
   return (
     <>
-      {" "}
       <div className={style.formGroup}>
         <label htmlFor="email">Email</label>
         <input

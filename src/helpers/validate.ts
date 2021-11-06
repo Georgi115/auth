@@ -1,7 +1,4 @@
-interface IData {
-  value: string;
-  required: string;
-}
+import { IData } from "../interface/formInterface";
 interface IRegExp {
   [key: string]: RegExp;
   email: RegExp;
