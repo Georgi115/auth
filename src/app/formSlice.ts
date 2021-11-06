@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { searchUser, addUser } from "../helpers/authFunction";
-import { validate } from "../helpers/validate";
+import { searchUser, addUser } from "../helpers/authFunctions";
+import { validate, validateEmptyFields } from "../helpers/validate";
 import { IActionChangeInput } from "../interface/formInterface";
 interface IState {
   [key: string]: any;
@@ -47,22 +47,20 @@ export const formSlice = createSlice({
     submitForm(state, action: PayloadAction<string>) {
       state.message = null;
       const { email, password } = state;
-      const data = [state.email, state.password];
-      const res = data.every((el) => el.trim() !== "");
-      if (!res) {
+      if (!validateEmptyFields([email, password])) {
         state.emptyFields = true;
         return;
       }
       const obj = [
-        { value: state.email, required: "email" },
-        { value: state.password, required: "password" },
+        { value: email, required: "email" },
+        { value: password, required: "password" },
       ];
       if (!validate(obj)) {
         state.errorFields = true;
         return;
       }
       if (action.payload === "enter") {
-        searchUser(state.email, state.password)
+        searchUser(email, password)
           ? (state.message = "Вы успешно зашли в приложение")
           : (state.message = "Неправильные логин и пароль");
       } else if (action.payload === "registration") {

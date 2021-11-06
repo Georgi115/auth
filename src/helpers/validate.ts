@@ -15,3 +15,7 @@ export const validate = (data: IData[]) => {
   const res = data.every((el) => regExpDic[el.required].test(el.value));
   return res;
 };
+
+export const validateEmptyFields = (data: string[]) => {
+  return data.every((el) => el.trim() !== "");
+};

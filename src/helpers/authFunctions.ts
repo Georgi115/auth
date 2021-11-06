@@ -4,7 +4,6 @@ export const searchUser = (email: string, password: string) => {
   const res = users.find(
     (el) => el.email === email && el.password === password
   );
-  console.log(res);
   return res;
 };
 

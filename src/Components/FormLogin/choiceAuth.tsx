@@ -38,7 +38,7 @@ export const ChoiceAuth: FC = () => {
         className={styleRegistration}
       >
         Регистрация
-      </p>{" "}
+      </p>
     </div>
   );
 };
