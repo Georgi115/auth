@@ -11,6 +11,7 @@ interface IState {
   choiceAuth: string;
   errorFields: boolean;
   message: null | string;
+  loading: boolean;
 }
 const initialState: IState = {
   email: "",
@@ -20,6 +21,7 @@ const initialState: IState = {
   errorFields: false,
   choiceAuth: "enter",
   message: null,
+  loading: false,
 };
 
 export const formSlice = createSlice({
@@ -43,6 +45,9 @@ export const formSlice = createSlice({
     },
     changePasswordView(state, action: PayloadAction) {
       state.viewPassword = !state.viewPassword;
+    },
+    changeLoading(state, action: PayloadAction) {
+      state.loading = !state.loading;
     },
     submitForm(state, action: PayloadAction<string>) {
       state.message = null;
@@ -73,6 +78,11 @@ export const formSlice = createSlice({
   },
 });
 
-export const { changeInput, changePasswordView, submitForm, changeAuth } =
-  formSlice.actions;
+export const {
+  changeInput,
+  changePasswordView,
+  submitForm,
+  changeAuth,
+  changeLoading,
+} = formSlice.actions;
 export default formSlice.reducer;
