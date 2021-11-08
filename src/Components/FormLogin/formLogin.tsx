@@ -29,7 +29,7 @@ export const FormLogin: FC = () => {
         <Button />
       )}
       {emptyFields ? (
-        <Error nameClass="emptyFieldsError" text="Введите все поля" />
+        <Error nameClass="errorFields" text="Введите все поля" />
       ) : null}
       {errorFields ? (
         <Error nameClass="errorFields" text="Неккоректный email и пароль" />

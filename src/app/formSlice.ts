@@ -51,6 +51,7 @@ export const formSlice = createSlice({
         state.emptyFields = true;
         return;
       }
+
       const obj = [
         { value: email, required: "email" },
         { value: password, required: "password" },
